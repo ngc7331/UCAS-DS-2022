@@ -33,6 +33,7 @@ int InsertList(SqList *s, int data, int pos) {
         s->arr[i] = s->arr[i-1];
     s->arr[pos] = data;
     s->length ++;
+    return 0;
 }
 
 int SqInsert(SqList *s, int data, int cmp(int a, int b)) {

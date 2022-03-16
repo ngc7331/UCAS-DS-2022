@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int ElemType;
+
+typedef struct __node {
+    struct __node *next;
+    ElemType data;
+} LNode;
+
+typedef struct {
+    LNode *head;
+    int length;
+} LList;
+
+int InitList(LList *l) {
+    l->head = (LNode *) malloc(sizeof(LNode));
+    l->head->next = NULL;
+    l->length = 0;
+    return 0;
+}
+
+int InsertList(LList *l, ElemType data) {
+    LNode *n = (LNode *) malloc(sizeof(LNode));
+    n->next = l->head->next;
+    n->data = data;
+    l->head->next = n;
+    l->length ++;
+    return 0;
+}
+
+void PrintList(LList *l) {
+    LNode *p = l->head->next;
+    while (p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+}
+
+void input(LList *l, int len) {
+    int data;
+    scanf("%d", &data);
+    if (len > 0)
+        input(l, len-1);
+    InsertList(l, data);
+}
+
+void extend(LList *a, LList *b) {
+    LNode *p = a->head;
+    while (p->next != NULL) p = p->next;
+    p->next = b->head->next;
+    a->length += b->length;
+}
+
+int main() {
+    int m, n;
+    LList a, b;
+    InitList(&a);
+    InitList(&b);
+    scanf("%d %d", &m, &n);
+    input(&a, m-1);
+    input(&b, n-1);
+
+    if (m>n) extend(&b, &a);
+    else extend(&a, &b);
+
+    if (m>n) PrintList(&b);
+    else PrintList(&a);
+    return 0;
+}

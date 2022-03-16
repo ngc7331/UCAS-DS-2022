@@ -6,6 +6,8 @@
 typedef int ElemType;
 #endif // __ELEMTYPE_DEF
 
+// TODO
+
 struct __node {
     ElemType data;
     struct __node *prev, *next;
