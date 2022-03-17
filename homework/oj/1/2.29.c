@@ -11,7 +11,7 @@ typedef struct __node {
 LList InitList() {
     LList head = (LList) malloc(sizeof(LNode));
     head->next = NULL;
-    return 0;
+    return head;
 }
 
 int InsertList(LList head, ElemType data) {
@@ -19,18 +19,6 @@ int InsertList(LList head, ElemType data) {
     n->next = head->next;
     n->data = data;
     head->next = n;
-    return 0;
-}
-
-int ReverseList(LList head) {
-    LNode *traverser = head->next, *pp=NULL, *p;
-    while (traverser != NULL) {
-        p = traverser;
-        traverser = traverser->next;
-        p->next = pp;
-        pp = p;
-    }
-    head->next = p;
     return 0;
 }
 
@@ -48,7 +36,10 @@ int ModList(LList A, LList B, LList C) {
             pa = pa->next;
             free(tmp);
         }
-        else pa = pa->next;
+        else {
+            pa = pa->next;
+            ppa = ppa->next;
+        }
     }
     return 0;
 }
