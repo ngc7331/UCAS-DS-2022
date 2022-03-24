@@ -2,7 +2,8 @@
 #define __HEAD_DS2022
 
 typedef enum {
-    OVERFLOW = -2,
+    UNDERFLOW = -3,
+    OVERFLOW,
     INFEASIBLE,
     ERROR,
     OK
