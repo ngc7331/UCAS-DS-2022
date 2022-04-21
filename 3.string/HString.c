@@ -60,3 +60,40 @@ Status StrDelete(HString *s,int i,int j);
 Status StrReplace (HString *s,int i,int j,HString *t); 
 //11. 将字符串变量的值赋给字符串变量s
 Status StrCopy(HString *s,HString *t); 
+
+/*
+void prints(HString *s) {
+    HChar *p = s->head->succ;
+    while (p!=NULL) {
+        printf("%c", p->ch);
+        p = p->succ;
+    }
+}
+
+void StrDestroy(HString *s) {
+    HChar *p=s->head, *pp;
+    while (p!=NULL) {
+        pp = p;
+        p = p->succ;
+        free(pp);
+    }
+}
+
+void SubStr(HString *s, HString *sub, int a, int b) {
+    // sub = s[a:b], from 0, include a, not include b
+    StrDestroy(sub); StrInit(sub);
+    sub->length = b-a+1;
+    int i=0;
+    HChar *p = s->head->succ;
+    while (i++ < a && p!=NULL) p=p->succ;
+    while (i++ <= b && p!=NULL) {
+        HChar *n = (HChar *) malloc(sizeof(HChar));
+        n->ch = p->ch;
+        n->next = sub->tail;
+        n->succ = NULL;
+        sub->tail->succ = n;
+        sub->tail = n;
+        p = p->succ;
+    }
+}
+*/
