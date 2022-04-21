@@ -17,14 +17,14 @@ void GetNext(HString *p, int next[]) {
 int StrIndexKMP(HString *s, HString *p, int start) {
     int next[p->length];
     GetNext(p, next);
-    int i = start-1, j = 0;
+    int i = start, j = 0;
     while (i < s->length && j < p->length) {
         if (j==-1 || s->ch[i]==p->ch[j]) {
             i++; j++;
         }
         else j = next[j];
     }
-    if (i == s->length) return -1;
+    if (i == s->length && j != p->length) return -1;
     else return i - p->length;
 }
 
@@ -32,7 +32,7 @@ int main() {
     HString s, p;
     StrInit(&s), StrInit(&p);
     StrAssign(&s, "abcaabcabdab");
-    StrAssign(&p, "abcab");
+    StrAssign(&p, "abc");
     int res = StrIndexKMP(&s, &p, 0);
     printf("%d\n", res);
 }
