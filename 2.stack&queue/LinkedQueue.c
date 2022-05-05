@@ -38,7 +38,8 @@ int IsQueueEmpty(LinkedQueue *lq) {
 
 // 4. 查看队头元素
 Status GetFront(LinkedQueue *lq, ElemType *e) {
-    e = lq->front->data;
+    if (IsQueueEmpty(lq)) return ERROR;
+    *e = lq->front->data;
     return OK;
 }
 
@@ -56,11 +57,13 @@ Status Enqueue(LinkedQueue *lq, ElemType e) {
 
 //6. (队头)元素出队
 Status Dequeue(LinkedQueue *lq, ElemType *e) {
-    QNode *n = lq->front;
+    if (IsQueueEmpty(lq)) return ERROR;
+    QNode *n = lq->front->next;
     *e = n->data;
-    lq->front = n->next;
+    lq->front->next = n->next;
     lq->len --;
     free(n);
+    if (IsQueueEmpty(lq)) lq->rear = lq->front;
     return OK;
 }
 
