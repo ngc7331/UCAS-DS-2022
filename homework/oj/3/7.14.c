@@ -44,6 +44,13 @@ void printList(NodeLink *l) {
     }
 }
 
+void printAGraph(AGraph g) {
+    for (int i=1; i<=g.vexnum; i++) {
+        printf("%d%c", i, g.v[i].first->next==NULL?'\n':' ');
+        printList(g.v[i].first);
+    }
+}
+
 int main(int argc, char *argv[]) {
     AGraph g;
     initAGraph(&g, 1);
@@ -57,9 +64,7 @@ int main(int argc, char *argv[]) {
         insertDesList(g.v[a].first, b);
     }
 
-    for (int i=1-has_zero; i<g.vexnum-has_zero+1; i++) {
-        printf("%d%c", i, g.v[i].first->next==NULL?'\n':' ');
-        printList(g.v[i].first);
-    }
+    printAGraph(g);
+
     return 0;
 }
