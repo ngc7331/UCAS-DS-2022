@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// this works in local machine
+// but caused a runtime error in online-judge system
+// I don't know how to fix it
+
+// 8.13-fake.c is a working solution
+// but it doesn't really allocate memory
+
 #define SIZE 100001
 
 typedef enum {
