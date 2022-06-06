@@ -39,14 +39,27 @@ typedef struct {
     int left, right;
 } node;
 
+int tmaxcache[TREESIZE];
 int tmax(node t[], int i) {
     if (i == -1) return -INFINITE;
-    return max(tmax(t, t[i].left), max(tmax(t, t[i].right), t[i].data));
+    if (tmaxcache[i] == -INFINITE)
+        tmaxcache[i] = max(tmax(t, t[i].left), max(tmax(t, t[i].right), t[i].data));
+    return tmaxcache[i];
 }
 
+int tmincache[TREESIZE];
 int tmin(node t[], int i) {
     if (i == -1) return INFINITE;
-    return min(tmin(t, t[i].left), max(tmin(t, t[i].right), t[i].data));
+    if (tmincache[i] == INFINITE)
+        tmincache[i] = min(tmin(t, t[i].left), min(tmin(t, t[i].right), t[i].data));
+    return tmincache[i];
+}
+
+void initCache() {
+    for (int i=0; i<TREESIZE; i++) {
+        tmaxcache[i] = -INFINITE;
+        tmincache[i] = INFINITE;
+    }
 }
 
 Bool isBST(node t[], int i) {
@@ -57,6 +70,7 @@ Bool isBST(node t[], int i) {
 
 int main(int argc, char *argv[]) {
     node t[TREESIZE];
+    initCache();
     for (int i=0; scanf("%d %d %d", &t[i].data, &t[i].left, &t[i].right) == 3; i++);
     printf("%d", isBST(t, 0));
     return 0;
