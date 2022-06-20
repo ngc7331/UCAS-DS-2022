@@ -3,10 +3,16 @@
 
 #define CACHESIZE 10000
 
+typedef enum {
+    False,
+    True,
+} Bool;
+
 typedef struct __node {
     int data;
     struct __node *parent, *left, *right;
     int bf;
+    Bool prev, succ;
 } node, *AVL;
 
 node *newNode(int x) {
@@ -14,6 +20,7 @@ node *newNode(int x) {
     n->data = x;
     n->parent = n->left = n->right = NULL;
     n->bf = 0;
+    n->prev = n->succ = False;
     return n;
 }
 
@@ -108,16 +115,30 @@ void insertBST(AVL *tp, int x) {
     }
 }
 
+void inorderSuccThreading(AVL t) {
+    if (t == NULL || t->left == NULL) return ;
+    AVL p = t->left;
+    while (p->right != NULL) p = p->right;
+    p->right = t;
+    p->succ = True;
+    inorderSuccThreading(t->left);
+    if (!t->succ)
+        inorderSuccThreading(t->right);
+}
+
 void search(AVL t, int a, int b) {
     if (t == NULL) return ;
-    if (t->data <= a)
-        search(t->right, a, b);
-    else if (t->data >= b)
-        search(t->left, a, b);
-    else {
-        search(t->left, a, b);
-        printf("%d ", t->data);
-        search(t->right, a, b);
+    while (t->left != NULL) t = t->left;
+    while (t->right != NULL) {
+        if (t->data >= b) break;
+        if (t->data > a)
+            printf("%d ", t->data);
+        if (t->succ)
+            t = t->right;
+        else {
+            t = t->right;
+            while (t->left != NULL) t = t->left;
+        }
     }
 }
 
@@ -130,6 +151,7 @@ int main(int argc, char *argv[]) {
         tmpp += offset;
         insertBST(&t, x);
     }
+    inorderSuccThreading(t);
     int a, b;
     scanf("%d", &a);
     scanf("%d", &b);
