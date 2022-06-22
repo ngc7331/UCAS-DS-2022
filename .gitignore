@@ -1,4 +1,5 @@
 
 conf.json
-test.c
+test.*
 a.out
+.vscode/
