@@ -93,10 +93,12 @@ data = {
 # with open('data.json', 'w') as f:
 #     json.dump(data, f, indent=2, ensure_ascii=False)
 
-OJ_PATH = os.path.join(os.getcwd(), 'homework', 'oj')
+OJ_PATH = os.path.join(os.getcwd())
 
 dirs, _ = getFiles(OJ_PATH)
 for d in dirs:
+    if d == 'groupwork':
+        continue
     d = os.path.join(OJ_PATH, d)
     _, files = getFiles(d)
     for filename in files:
